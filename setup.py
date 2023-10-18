@@ -15,7 +15,7 @@ setup(
     license='MIT License',
     description='Adds CropperJS\'s functionality to image fields in Django/Django CMS admin.',
     long_description=README,
-    url='https://bitbucket.org/rcostanza/django-cropperjs/',
+    url='https://github.com/francescofact/django-cropperjs2',
     author='Francesco Fattori',
     author_email='ffattori@me.com',
     classifiers=[
