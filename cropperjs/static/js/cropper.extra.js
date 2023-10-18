@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
                             '<button type="button" class="aspectratio" onclick="document.getElementById(\'ratiodropdown\').classList.toggle(\'show\');" class="dropbtn"></button>' +
                             '<div id="ratiodropdown" class="dropdown-content"></div>' +
                         '</div>' +
-                        '<input type="checkbox" id="cropper_limit_dimensions" checked />' +
-                        '<label for="cropper_limit_dimensions" title="' + _['Automatically limits the image\'s dimensions'] + '">' + _['Limit dimensions'] + '</label>' +
+                        '<input class="limitdimension" type="checkbox" id="cropper_limit_dimensions" checked />' +
+                        '<label class="limitdimension" for="cropper_limit_dimensions" title="' + _['Automatically limits the image\'s dimensions'] + '">' + _['Limit dimensions'] + '</label>' +
                         '<input type="button" id="btn-cancel" value="' + _['Cancel'] + '" />' +
                         '<input type="button" id="btn-save" class="default" value="' + _['Save image'] + '" />' +
                     '</div>' +
@@ -115,7 +115,12 @@ document.addEventListener("DOMContentLoaded", function() {
         currentFileName = input.value.split("\\").pop().replace(/\.([^\.]+)$/, "").substr(0, 50);
 
         var aspectRatio = $currentEditor.attr("data-aspectratio").replaceAll("'", '"') || null;
-
+        let limitdimension = $currentEditor.attr("data-limitdimension") == "False" ? false : true || true
+        if (limitdimension){
+            $(".limitdimension").hide();
+        } else {
+            $(".limitdimension").show();
+        }
         if(input.files && input.files[0]) {
             var reader = new FileReader()
                 ,file = input.files[0]
@@ -257,7 +262,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     $("body").on("click", ".dropbtns", function(){
-        console.log("Click dropbrns")
         $(".dropdown-content").removeClass("show")
     })
 });

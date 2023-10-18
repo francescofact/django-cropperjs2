@@ -20,11 +20,14 @@ class CropperImageField(models.ImageField):
 
         # bool, optional: linked Cropper fields are called consecutively after calling any other in the same
         # context (those outside inlines, inline groups), using the same image provided by the user
-        'linked'
+        'linked',
+
+        # bool, optional: it will hide the limit dimension flag on modal. Defaulf "false"
+        'hide_limitdimension'
     ]
 
-    def __init__(self, verbose_name=None, name=None, dimensions=None, aspectratio=None, linked=False, **kwargs):
-        self.dimensions, self.aspectratio, self.linked = dimensions, aspectratio, linked
+    def __init__(self, verbose_name=None, name=None, dimensions=None, aspectratio=None, linked=False, hide_limitdimension = False, **kwargs):
+        self.dimensions, self.aspectratio, self.linked, self.hide_limitdimension = dimensions, aspectratio, linked, hide_limitdimension
         if self.dimensions:
             self.aspectratio = str(float(self.dimensions[0]) / float(self.dimensions[1])).replace(",", ".")
 

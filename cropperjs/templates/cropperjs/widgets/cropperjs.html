@@ -4,7 +4,8 @@
     data-label="{{ widget.attrs.label }}"
     {% if widget.required %}data-required="true"{% endif %}
     {% if widget.attrs.dimensions %}data-dimensions="{{ widget.attrs.dimensions|join:"," }}"{% endif %}
-    {% if widget.attrs.aspectratio %}data-aspectratio="{{ widget.attrs.aspectratio }}"{% endif %}>
+    {% if widget.attrs.aspectratio %}data-aspectratio="{{ widget.attrs.aspectratio }}"{% endif %}
+    {% if widget.attrs.hide_limitdimension %}data-limitdimension="{{ widget.attrs.limitdimension }}"{% endif %}>
 
     <input type="hidden" name="{{ widget.name }}" id="id_{{ widget.name }}" {% if widget.value %}value="{{ widget.value }}"{% endif %} />
     <img {% if widget.value %}src="{{ widget.value }}"{% endif %} />
