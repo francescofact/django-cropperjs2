@@ -1,4 +1,4 @@
-# django-cropperjs
+# django-cropperjs2
 
 Adds [CropperJS](https://fengyuanchen.github.io/cropperjs/)'s functionality to image fields in Django/Django CMS admin, including inlines.
 

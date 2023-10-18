@@ -25,7 +25,12 @@ document.addEventListener("DOMContentLoaded", function() {
                         '<div id="btn-actions" class="col-md-12">' +
                             '<button type="button" class="rotate-left" data-action="cropper.rotate(-10)" title="' + _['Rotate (clockwise)'] + '"></button>' +
                             '<button type="button" class="rotate-right" data-action="cropper.rotate(10)" title="' + _['Rotate (counterclockwise)'] + '"></button>' +
+                            '<button type="button" class="zoomin" data-action="cropper.zoom(0.1)" title="' + _['Zoom In'] + '"></button>' +
+                            '<button type="button" class="zoomout" data-action="cropper.zoom(-0.1)" title="' + _['Zoom Out'] + '"></button>' +
                             '<button type="button" class="reset" data-action="cropper.reset()" title="' + _['Redefine'] + '"></button>' +
+                            '<button type="button" class="reset" data-action="cropper.reset()" title="' + _['Redefine'] + '"></button>' +
+                            '<button type="button" class="aspectratio" onclick="document.getElementById(\'ratiodropdown\').classList.toggle(\'show\');" class="dropbtn"></button>' +
+                            '<div id="ratiodropdown" class="dropdown-content"></div>' +
                         '</div>' +
                         '<input type="checkbox" id="cropper_limit_dimensions" checked />' +
                         '<label for="cropper_limit_dimensions" title="' + _['Automatically limits the image\'s dimensions'] + '">' + _['Limit dimensions'] + '</label>' +
@@ -48,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     cropper = new Cropper($("#cropper_image")[0], {
         autoCropArea: 1,
-        viewMode: 1,
+        viewMode: 0,
         dragMode: 'move',
         cropBoxMovable: true,
         cropBoxResizable: true,
@@ -142,6 +147,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     function openModal(imageObject, aspectRatio) {
+        if (aspectRatio != "")
+            aspectRatio = JSON.parse(aspectRatio)
+
         var $modal = $('#cropper_modal'),
             hasFixedDimensions = !!$currentEditor.attr("data-dimensions");
 
@@ -155,7 +163,21 @@ document.addEventListener("DOMContentLoaded", function() {
         $("#modalLabel").html(_["Crop for"] + " " + $currentEditor.attr("data-label"));
 
         cropper.replace(imageObject);
-        cropper.setAspectRatio(aspectRatio);
+
+        if (typeof(aspectRatio) == 'object'){
+            cropper.setAspectRatio(aspectRatio[0]);
+            showAspectRatioButtons(aspectRatio);
+        } else {
+            cropper.setAspectRatio(aspectRatio);
+        }
+    }
+
+    function showAspectRatioButtons(ratios){
+        let group = $("#ratiodropdown")
+        group.html("")
+        ratios.forEach(element => {
+            group.append('<button href="#" class="dropbtns" data-action="cropper.setAspectRatio('+element+')" title="' + _['Change Aspect Ratio'] + '">'+element+'</button>')
+        });
     }
 
     function checkImageDimensions() {
