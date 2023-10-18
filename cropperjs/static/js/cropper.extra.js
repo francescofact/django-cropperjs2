@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         currentFileName = input.value.split("\\").pop().replace(/\.([^\.]+)$/, "").substr(0, 50);
 
-        var aspectRatio = $currentEditor.attr("data-aspectratio") || null;
+        var aspectRatio = $currentEditor.attr("data-aspectratio").replaceAll("'", '"') || null;
 
         if(input.files && input.files[0]) {
             var reader = new FileReader()
@@ -165,10 +165,10 @@ document.addEventListener("DOMContentLoaded", function() {
         cropper.replace(imageObject);
 
         if (typeof(aspectRatio) == 'object'){
-            cropper.setAspectRatio(aspectRatio[0]);
+            cropper.setAspectRatio(eval(aspectRatio[0]));
             showAspectRatioButtons(aspectRatio);
         } else {
-            cropper.setAspectRatio(aspectRatio);
+            cropper.setAspectRatio(eval(aspectRatio));
         }
     }
 
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let group = $("#ratiodropdown")
         group.html("")
         ratios.forEach(element => {
-            group.append('<button href="#" class="dropbtns" data-action="cropper.setAspectRatio('+element+')" title="' + _['Change Aspect Ratio'] + '">'+element+'</button>')
+            group.append('<button href="#" class="dropbtns" data-action="cropper.setAspectRatio(eval('+element+'))" title="' + _['Change Aspect Ratio'] + '">'+element.replace("/", ":")+'</button>')
         });
     }
 
@@ -256,4 +256,8 @@ document.addEventListener("DOMContentLoaded", function() {
         $("#cropper_modal").hide();
     });
 
+    $("body").on("click", ".dropbtns", function(){
+        console.log("Click dropbrns")
+        $(".dropdown-content").removeClass("show")
+    })
 });

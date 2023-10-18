@@ -7,8 +7,8 @@ from .utils import cropperImageFile, TEXT_TYPE
 class CropperImageFormField(forms.ImageField):
     widget = CropperWidget
 
-    def __init__(self, aspectratio=None, dimensions=None, linked=None, show_zoom=False, **kwargs):
-        self.aspectratio, self.dimensions, self.linked, self.show_zoom = aspectratio, dimensions, linked, show_zoom
+    def __init__(self, aspectratio=None, dimensions=None, linked=None, **kwargs):
+        self.aspectratio, self.dimensions, self.linked = aspectratio, dimensions, linked
         super(CropperImageFormField, self).__init__(**kwargs)
 
 
@@ -18,8 +18,7 @@ class CropperImageFormField(forms.ImageField):
             'label': self.label,
             'aspectratio': self.get_aspectratio(),
             'dimensions': self.dimensions,
-            'linked': self.linked,
-            'show_zoom': self.show_zoom
+            'linked': self.linked
         })
         return attrs
 
